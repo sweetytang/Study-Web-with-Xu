@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+
+    <body>
+        <div id="todo-list-example">
+            
+                <label for="new-todo">Add a todo</label>
+                <input v-model="newTodoText" id="new-todo" placeholder="每天一遍爱娜娜">
+                <button @click="addNewTodo">Add</button>
+            
+
+            <ul>
+                <li 
+                    
+                    v-for="(todo,index) in todos"
+                    :key="todo.id">
+                    <label for="cancel">{{todo.title}}</label>
+                    <button id="cancel" @click="todos.splice(index,1)">Remove</button>
+                </li>
+                
+            </ul>
+        </div>
+
+        <script>
+           
+            var vm=new Vue({
+                el: '#todo-list-example',
+                data: {
+                    newTodoText:'',
+                    todos: [
+                        {id:1,
+                        title:'Do the dishes',
+                        },
+                        {id:2,
+                        title:'Take out the trash',
+                        },
+                        {id:3,
+                        title:'Mow the lawn'
+                        }],
+                    nextTodoId:4
+                    },
+                methods: {
+                    addNewTodo: function () {
+                        this.todos.push({
+                        id:this.nextTodoId++,
+                        title:this.newTodoText
+                        });
+                        this.newTodoText=''}
+                        }
+            })
+            
+        </script>
+    </body>
+</html>

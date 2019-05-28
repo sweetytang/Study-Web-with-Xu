@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+        <button v-on:click="gett" >点击</button>
+        <input type="text" v-on:keyup.13="gett" />
+        <div v-on:click="gett">外部点击
+            <div  v-on:click.stop="tz">内部点击</div>
+        </div>
+        <a href="https://www/baidu.com">dsfs</a>
+        <div v-on:click.self="gett">外部点击1
+            <div  v-on:click="tz">内部点击2</div>
+        </div>
+        <div v-on:click="gett">外部点击111
+            <div  v-on:click.capture="tz">内部点击222
+                <div  v-on:click="set">点击333</div>
+            </div>
+        </div>
+        <div  v-on:click.once="tz">once</div>
+        </div>
+
+        <div id='a'>外部点击3
+            <div  id='b'>内部点击4</div>
+        </div>
+
+        </script>
+        <script type="application/javascript">
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    name:'张三'
+                },
+                methods:{
+                    gett:function(e){
+                        alert("111");
+                        console.log(e.target);
+                        this.name='李四';
+
+                    },
+                    tz:function(e){
+                        console.log(e.target);
+                        alert(222)
+                    },
+                    set:function(e){
+                        console.log(e.target);
+                        alert(333)
+                    }
+                }
+            })
+            document.getElementById('a').addEventListener('click',function(e){
+                console.log(e.target);
+                alert('aaaa')
+            },true)
+            document.getElementById('b').addEventListener('click',function(e){
+                console.log(e.target);
+                alert('bbbb')
+            },true)
+        </script>
+    </body>
+
+</html>

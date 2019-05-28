@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+        <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="app">
+                <div class="container">
+                        <div class="jumbotron">
+                            <h1 class="display-4">抽奖活动 </h1>
+                            <p class="lead">庆祝公司上市</p>
+                            <p class="lead">
+                                <button class="btn btn-primary btn-lg" @click="lucky">抽奖开始</button>
+                                <button class="btn btn-primary btn-lg" @click="stop">抽奖结束</button>
+                            </p>
+                        </div>
+        
+                        <div class="card">
+                                <div class="card-header">
+                                    <h1>幸运儿</h1>
+                                </div>
+                                <div class="card-body">
+                                    <ol>
+                                        <li v-for="user in luckyusers">
+                                            {{user.name}}
+                                        </li>
+                                    </ol>
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <script>
+            var users=[];
+            for(var i=0;i<100;i++){
+                users.push({name:i+1})
+            };
+                
+            var vm=new Vue({
+                el:'#app',
+                data:{
+                    users:users,
+                    isrunning:false,
+                    luckynumber:1,
+                    luckyusers:[]
+                },
+                methods:{
+
+                    lucky:function(){
+                        console.log('开始抽奖');
+                        this.isrunning=true;
+                        this.run();
+                    },
+
+                    stop:function(){                                 //判断新选的序号是否在luckyusers里面，若是，则重新run。
+                        
+                        while(true){
+                            this.isrunning=false;
+                            if(this.luckyusers.indexOf(this.users[this.luckynumber-1])>=0){
+                                this.lucky();
+                        }
+                            else if(this.luckyusers.indexOf(this.users[this.luckynumber-1])<0){
+                                break;
+                            }
+                        }
+                        console.log('停止抽奖');
+                        console.log(this.luckynumber);
+                        this.luckyusers.push(this.users[this.luckynumber-1]);
+                    },
+
+                    run:function(){                                       //循环调用run函数，根据luckynumber确定获奖序号。
+                        if(!this.isrunning){
+                            return;
+                        }
+                        console.log('随机抽选中......');
+                        if(this.luckynumber>=100){
+                            this.luckynumber=1;
+                        }
+                        this.luckynumber+=1;
+                        setTimeout(this.run,1);
+                        
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

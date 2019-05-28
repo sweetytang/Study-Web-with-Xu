@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script> 
+        <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <body>
+        <div id="app">
+            <div class="container">
+                <div class="jumbotron">
+                    <h1 class="display-4">抽奖活动 </h1>
+                    <p class="lead">庆祝公司上市</p>
+                    <p class="lead">
+                        <button class="btn btn-primary btn-lg" @click="lucky">抽奖开始</button>
+                    </p>
+                </div>
+
+                <div class="card">
+                        <div class="card-header">
+                            <h1>幸运儿</h1>
+                        </div>
+                        <div class="card-body">
+                            <ol>
+                                <li v-for="num in numlist">
+                                    {{namelist[num].name}}
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <script>
+            var vm=new Vue({
+                el:'#app',
+                data:{
+                    namelist:[
+                        {name:'k'},
+                        {name:'a'},
+                        {name:'b'},
+                        {name:'c'},
+                        {name:'d'},
+                        {name:'e'},
+                        {name:'f'},
+                        {name:'g'},
+                        {name:'h'},
+                        {name:'i'}
+                    ],
+                    numlist:[]
+                },
+                methods:{
+                    lucky(){                                     //通过随机数生成获奖key，再将字典中的value对应找出。
+                        for(;this.numlist.length<10;){
+                            var a=Math.floor(Math.random()*10);
+                            var b=this.numlist.indexOf(a);
+                            if(b<0){
+                                this.numlist.push(a)
+                            }
+                        }
+                            
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
